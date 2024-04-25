@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <title>Login</title>
+</head>
+<body>
+<div class="main-login">
+    <div class="left-login">
+        <h1>Faça seu Login!!!<br>E entre para a Proz<br><img src="{% static '/logo-proz.png' %}" class="left-login-img" alt="img1"></h1>
+    </div>
+    <div class="right-login">
+        <div class="card-login">
+            <h2>Login</h2>
+            {% if form.errors %}
+                <div class="error-message">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="textfield">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                <div class="textfield">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+                <button type="POST" id="VerificUserBtn" class="btn-login">Login</button>
+                <a href="../register" class="register-link">Register</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <title>Register</title>
+</head>
+<body>
+<div class="main-login">
+    <div class="left-login">
+        <h1>Crie sua Conta!!!<br>E entre para a Proz<br><img src="{% static '/logo-proz.png' %}" class="left-login-img" alt="img1"></h1>
+    </div>
+    <div class="right-login">
+        <div class="card-login">
+            <h2>Registro</h2>
+            {% if form.errors %}
+                <div class="error-message">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <form method="post">
+                <div class="textfield">
+                    {{ form.nome.label_tag }}
+                    {{ form.nome }}
+                </div>
+                <div class="textfield">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="textfield">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+                <div class="textfield">
+                    {{ form.confirm_password.label_tag }}
+                    {{ form.confirm_password }}
+                </div>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <button type="submit" class="btn-login">Register</button>
+            </form>
+            <a href="../login" class="register-link">Já tem uma conta? Login</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
