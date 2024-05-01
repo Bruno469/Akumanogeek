@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'LoginPage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db-5nz7s39kpxrc',
-        'USER': 'db-5nz7s39kpxrc',
-        'PASSWORD': 'H1z69dY8WhU6cTvNLZhwfTgx',
-        'HOST': 'up-us-nyc1-mysql-1.db.run-on-seenode.com',
+        'NAME': 'db-88tqtrs122rg',
+        'USER': 'db-88tqtrs122rg',
+        'PASSWORD': '97ycPdMWOntZD2RiZttH5rxs',
+        'HOST': 'up-es-mad1-mysql-1.db.run-on-seenode.com',
         'PORT': '11550',
     }
 }
