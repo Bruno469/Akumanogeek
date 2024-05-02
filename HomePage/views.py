@@ -33,7 +33,7 @@ def Add_Produto(request, objeto_id):
 
     # Se for uma requisição GET, renderize o formulário
     form = ProdutoForm()
-    return render(request, 'adicionar_produto.html', {'form': form})
+    return render(request, 'homepage/adicionar_produto.html', {'form': form})
 # class HomePageView(request):
         # Renderiza a pagina de homepage
         # template_name = 'homepage/homepage.html'

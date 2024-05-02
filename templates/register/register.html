@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Register</title>
 </head>
 <body>
@@ -46,10 +46,12 @@
                     {{ form.phone_number }}
                 </div>
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <button type="submit" class="btn-login">Register</button>
+                <button type="submit" class="btn-registro">Register</button>
             </form>
             <a href="../login" class="register-link">Já tem uma conta? Login</a>
         </div>
+
+        <img src="{% static 'mario.gif' %}" class="mario">
     </div>
 </div>
 </body>
