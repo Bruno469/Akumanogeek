@@ -1,12 +1,14 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.models import User
+from phonenumber_field.formfields import PhoneNumberField
 
 class SignUpForm(forms.Form):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address')
     nome = forms.CharField(min_length=3, max_length=32)
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
     confirm_password = forms.CharField(label='Confirmação da senha', widget=forms.PasswordInput)
+    phone_number = PhoneNumberField()
 
     def clean(self):
         cleaned_data = super().clean()

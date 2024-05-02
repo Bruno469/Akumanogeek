@@ -3,7 +3,7 @@ from .models import Produtos
 
 class ProdutoForm(forms.ModelForm):
     class Meta:
-        model = Produto
+        model = Produtos
         fields = ['nome', 'description', 'tags', 'valor', 'imagem']
         
     def clean_valor(self):

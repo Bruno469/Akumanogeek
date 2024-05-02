@@ -5,14 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
     <title>Register</title>
 </head>
 <body>
 <div class="main-login">
-    <div class="left-login">
-        <h1>Crie sua Conta!!!<br>E entre para a Proz<br><img src="{% static '/logo-proz.png' %}" class="left-login-img" alt="img1"></h1>
-    </div>
     <div class="right-login">
         <div class="card-login">
             <h2>Registro</h2>
@@ -43,6 +40,10 @@
                 <div class="textfield">
                     {{ form.confirm_password.label_tag }}
                     {{ form.confirm_password }}
+                </div>
+                <div class="textfield">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
                 </div>
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <button type="submit" class="btn-login">Register</button>
