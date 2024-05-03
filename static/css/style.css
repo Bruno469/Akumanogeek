@@ -11,6 +11,8 @@
 }
 
 .right-login {
+  position: relative;
+  z-index: 1; 
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -19,7 +21,8 @@
 }
 
 .card-login {
-  width: 60%;
+  position: relative; 
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,6 +112,16 @@ body {
   background: linear-gradient(to bottom, red, black);
 }
 
+.mario-run {
+  position: absolute;
+  bottom: 0;
+  left: -40px;
+  width: 80px;
+  height: 70px;
+  background-size: contain;
+  animation: marioMove 5s linear infinite;
+}
+
 @keyframes marioMove {
   0% {
       left: 0;
@@ -124,12 +137,16 @@ body {
 
 @keyframes marioJump {
   0% {
+      transform: rotate(0deg);
       bottom: 0;
   }
   50% {
-      bottom: 100px; /* Altura do pulo */
+      transform: rotate(360deg);
+      bottom: 100px; 
   }
   100% {
+      transform: scaleX(1);
+      left: calc(100% - 50px);
       bottom: 0;
   }
 }
@@ -137,9 +154,8 @@ body {
 .mario {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
+  left: -40px; /* Ajusta a posição inicial do Mario para que ele comece fora da área visível */
+  width: 80px;
+  height: 70px;
   background-size: contain;
-  animation: marioMove 5s linear infinite;
 }

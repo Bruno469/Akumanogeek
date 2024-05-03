@@ -5,10 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Proz</title>
+    <style>
+      body {
+        background-image: url('https://media.tenor.com/uie1cLb4VZsAAAAM/meme.gif');
+        background-size: cover; /* Para cobrir todo o tamanho da janela */
+        background-repeat: no-repeat; /* Para evitar a repetição do GIF */
+      }
+    </style>
 </head>
 <body>
   <h1>Akumanogeek</h1>
-</form>
+  {% for produto in produtos %}
+    <div class="produtos">
+      {% if produto.imagem %}
+          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+      {% endif %}
+      <h2>{{ produto.nome }}</h2>
+      <p>{{ produto.description }}</p>
+      <br>
+      {{ produto.valor }}
+    </div>
+  {% endfor %}
 </body>
 </html>

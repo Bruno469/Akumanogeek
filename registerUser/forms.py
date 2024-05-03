@@ -8,7 +8,7 @@ class SignUpForm(forms.Form):
     nome = forms.CharField(min_length=3, max_length=32)
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
     confirm_password = forms.CharField(label='Confirmação da senha', widget=forms.PasswordInput)
-    phone_number = PhoneNumberField(label='Telefone', min_length=13, max_length=15)
+    phone_number = PhoneNumberField(label='Telefone', min_length=10, max_length=15)
 
     def clean(self):
         cleaned_data = super().clean()
