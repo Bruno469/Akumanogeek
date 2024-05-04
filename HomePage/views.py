@@ -2,18 +2,43 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from .forms import ProdutoForm
 from django.http import JsonResponse
-from .models import Produtos
+from .models import Produtos, UserImg
 
 def PageView(request):
-        if request.user.is_authenticated:
-            nome = request.user
-            email = request.user.email
-            return render(request, 'homepage/index.html', {'nome': nome, 'email': email})
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            formulario = UserImg(request.POST, request.FILES)
+            if formulario.is_valid():
+                user_id = request.user.id
+                imgUSER = formulario.cleaned_data['imagem']
+                try:
+                    produto = Produtos.objects.create(user_id=user_id, imgUSER=imgUSER)
+                    print("Imagem alterada com sucesso.")
+                    return HttpResponseRedirect(request.path_info)
+                except Exception as e:
+                    print("Erro ao salvar imagem:", e)
+                    return render(request, 'homepage/index.html', {'nome': nome, 'email': email, 'userimg': imgUSER, 'error_message': str(e)})
+            else:
+                # Se o formulário for inválido, retorne o formulário com erros para o template
+                return render(request, 'homepage/index.html', {'nome': nome, 'email': email, 'userimg': imgUSER, 'formulario': formulario})
         else:
-            return HttpResponse('Usuario não conectado')
+            formulario = UserImg()  # Crie uma instância vazia do formulário
+            
+        try:
+            nome = request.user
+            imgUSER = UserImg.objects.get(user=nome)
+        except UserImg.DoesNotExist:
+            imgUSER = 'media/default.avif'
+
+        nome = request.user
+        email = request.user.email
+
+        return render(request, 'homepage/index.html', {'nome': nome, 'email': email, 'imgUSER': imgUSER, 'formulario': formulario})
+    else:
+        return HttpResponse('Usuario não conectado')
 
 def SellView(request):
         if request.user.is_authenticated:
@@ -47,8 +72,8 @@ def Add_Produto(request):
 
                 return redirect('HomePage/ProdutosSell')
             except Exception as e:
-                print("Erro ao criar o produto:", e)  # Adicionando print para verificar se há algum erro ao criar o produto
-                return render(request, 'homepage/adicionar_produto.html', {'form': form, 'error_message': str(e)})
+                print("Erro ao criar o produto:", e)
+                return render(request, 'homepage/ProdutosSell', {'form': form, 'error_message': str(e)})
     else:
         form = ProdutoForm()
     return render(request, 'homepage/adicionar_produto.html', {'form': form})

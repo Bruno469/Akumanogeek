@@ -1,0 +1,78 @@
+body {
+    background-color: #000000;
+    opacity: 0.8;
+    margin: 0;
+    padding: 0;
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+}
+
+.imgLogo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #2234D4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #182C93;
+}
+
+.Produtos {
+    color: white;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.Produtos h1 {
+    margin-bottom: 20px;
+}
+
+.Produtos ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.Produtos ul li {
+    margin-bottom: 10px;
+}
+
+.mario {
+    position: absolute;
+    bottom: 0;
+    left: 0; 
+    width: 50px; 
+    height: 50px; 
+    background-color: red;
+    animation: marioMove 5s ease-out;
+}
+
+@keyframes marioMove {
+    0% {
+        left: initial;
+    }
+    100% {
+        left: calc(100% - 50px); 
+    }
+}

@@ -104,15 +104,19 @@
             </div>
         {% endfor %}
     {% else %}
-        <p>Nenhum produto encontrado para este usuário.</p>
+        <p>Nenhum produto encontrado.</p>
     {% endif %}
     <button id="vender">VENDER</button>
 </body>
+{% if error_message %}
 <script>
+    alert("{{ error_message }}");
+
     var botaoCompra = document.getElementById('vender');
 
     botaoCompra.addEventListener('click', function() {
         window.location.href = '/HomePage/AddProduto';
     });
 </script>
+{% endif %}
 </html>

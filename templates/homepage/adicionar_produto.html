@@ -126,10 +126,12 @@
                     return response.text();
                 } else {
                     throw new Error('Erro ao adicionar produto.');
+                    alert('Ocorreu um erro ao adicionar o produto.');
                 }
             })
             .then(data => {
                 window.location.href = '/HomePage/ProdutosSell';
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Erro:', error);

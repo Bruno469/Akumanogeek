@@ -13,3 +13,7 @@ class Produtos(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     imagem = models.ImageField(upload_to='')
     quantidade = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+
+class UserImg(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    imgUSER = models.ImageField(upload_to='')

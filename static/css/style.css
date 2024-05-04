@@ -1,161 +1,89 @@
-.main-login {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.left-login > h1 {
-  color: rgb(245, 12, 12);
-}
-
-.right-login {
-  position: relative;
-  z-index: 1; 
-  width: 50vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-login {
-  position: relative; 
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 30px 35px;
-  background: #fc0303;
-  border-radius: 20px;
-  box-shadow: 0px 10px 40px #00000056;
-  margin-top: 200px;
-  margin-bottom: 200px;
-}
-
-.card-login > h1 {
-  color: #f7f8f8;
-  font-weight: 800;
+/* Reset de estilos */
+* {
   margin: 0;
-}
-
-.textfield {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 10px 0px;
-}
-
-.textfield > input {
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  padding: 15px;
-  background: #514869;
-  color: #f0ffffde;
-  font-size: 12pt;
-  box-shadow: 0px 10px 40px #00000056;
-  outline: none;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.textfield > label {
-  color: #f0ffffde;
-  margin-bottom: 10px;
-}
-
-.textfield > input::placeholder {
-  color: #f0ffff94;
-}
-
-.btn-login {
-  width: 50%;
-  padding: 16px 0px;
-  margin: 25px;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-
-.btn-registro {
-  width: 50%;
-  padding: 16px 0px;
-  margin: 12px;
-  margin-left: 70px;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-
-.btn-registresse {
-  width: 50%;
-  padding: 16px 0px;
-  margin: 25px;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-
+/* Estilos para o corpo da página */
 body {
-  background: linear-gradient(to bottom, red, black);
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #FF416C, #FF4B2B); /* Gradiente de cores bonitas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.mario-run {
-  position: absolute;
-  bottom: 0;
-  left: -40px;
-  width: 80px;
-  height: 70px;
-  background-size: contain;
-  animation: marioMove 5s linear infinite;
+/* Container principal */
+.main-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes marioMove {
-  0% {
-      left: 0;
-  }
-  100% {
-      left: calc(100% - 50px);
-  }
+/* Container do formulário de registro */
+.right-login {
+  width: 400px; /* Largura fixa para o formulário */
+  background-color: rgba(255, 255, 255, 0.9); /* Fundo branco semi-transparente */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3); /* Sombra suave */
 }
 
-.jump {
-  animation: marioJump 0.5s ease-out;
+/* Título do formulário */
+.card-login h2 {
+  color: #FF5722; /* Cor laranja */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-@keyframes marioJump {
-  0% {
-      transform: rotate(0deg);
-      bottom: 0;
-  }
-  50% {
-      transform: rotate(360deg);
-      bottom: 100px; 
-  }
-  100% {
-      transform: scaleX(1);
-      left: calc(100% - 50px);
-      bottom: 0;
-  }
+/* Campos de entrada */
+.textfield {
+  margin-bottom: 20px;
 }
 
-.mario {
-  position: absolute;
-  bottom: 0;
-  left: -40px; /* Ajusta a posição inicial do Mario para que ele comece fora da área visível */
-  width: 80px;
-  height: 70px;
-  background-size: contain;
+.textfield label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333; /* Cor do texto mais escura */
+}
+
+.textfield input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc; /* Borda cinza */
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Botão de registro */
+.btn-registro {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF5722; /* Cor laranja */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-registro:hover {
+  background-color: #FF7043; /* Cor laranja mais clara ao passar o mouse */
+}
+
+/* Link de login */
+.register-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #777; /* Cor de texto cinza */
+  text-decoration: none;
+}
+
+.register-link:hover {
+  color: #333; /* Cor de texto mais escura ao passar o mouse */
 }

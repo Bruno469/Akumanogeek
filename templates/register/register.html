@@ -46,13 +46,12 @@
                     {{ form.phone_number }}
                 </div>
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <button type="submit" class="btn-registro">Register</button>
+                <button type="submit" id="register-bt" class="btn-registro">Register</button>
             </form>
             <a href="../login" class="register-link">Já tem uma conta? Login</a>
         </div>
     </div>
 </div>
-<img src="{% static 'mario.gif' %}" class="mario">
 <script src="{% static 'mario.js' %}"></script>
 </body>
 </html>

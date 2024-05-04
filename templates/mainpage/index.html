@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>AkUMA NO GEEK - Produtos</title>
+</head>
+<body>
+    <form method="GET" action="{% url 'search' %}">
+        <div class="home">
+            <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="Akuma no Geek Logo">
+            <input type="text" placeholder="O que você está procurando?">
+            <button type="submit">Buscar</button>
+        </div>
+    </form>
+    <div class="Produtos">
+        <h1>Produtos Disponíveis</h1>
+        <ul>
+            <li>Produto 1</li>
+            <li>Produto 2</li>
+            <li>Produto 3</li>
+        </ul>
+    </div>
+</body>
+</html>
