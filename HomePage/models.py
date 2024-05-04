@@ -11,4 +11,4 @@ class Produtos(models.Model):
     description = models.CharField(max_length=256)
     tags = models.ManyToManyField(Tag, blank=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
-    imagem = models.ImageField(upload_to='static/img/Produtos')
+    imagem = models.ImageField(upload_to='')

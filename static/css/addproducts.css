@@ -46,17 +46,17 @@ color: #999999;
 }
 
 button[type="submit"] {
-width: 100%;
-padding: 10px;
-border: none;
-border-radius: 5px;
-background-color: #d32f2f;
-color: #fff;
-cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d32f2f;
+    color: #fff;
+    cursor: pointer;
 }
 
 button[type="submit"]:hover {
-background-color: #b71c1c;
+    background-color: #b71c1c;
 }
 
 ul {
@@ -103,8 +103,8 @@ background-color: #8e0000;
 
 .image-preview {
     margin-left: 20px;
-    max-width: 200px; /* Ajuste conforme necessário */
-    max-height: 200px; /* Ajuste conforme necessário */
+    max-width: 200px; 
+    max-height: 200px; 
     overflow: hidden;
 }
 

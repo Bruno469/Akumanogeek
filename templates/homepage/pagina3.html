@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venda</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; 
+        }
+
+        .container {
+            border: 2px solid #f50303; 
+            background-color: black;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 100%; 
+            margin: 5px;
+            position: relative; 
+            color: white;
+            padding-bottom: 60px;
+        }
+
+        .container button {
+            color: #f50303;
+            width: 80%;
+            height: 50px;
+            background-color: black;
+            border: 2px solid #f50303; 
+            transition: all 0.3s ease;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        .container button:hover {
+            background-color: #f50303; 
+            color: black;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: calc(50% - 30px); 
+            }
+        }
+
+        #vender {
+            height: 50px;
+            background-color: black;
+            border: 2px solid #f50303;
+            color: white;
+            margin-top: auto;
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 0;
+            width: 50%;
+            left: 50%; 
+            margin-bottom: 2%;
+            transform: translateX(-50%);
+        }
+
+        #vender:hover {
+            background-color: #f50303; 
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    {% if produtos %}
+        {% for produto in produtos %}
+            <div class="container">
+                {% if produto.imagem %}
+                 <img src="media/{{ produto.imagem.url|cut:'/media/' }}" alt="{{ produto.nome }}">
+                {% endif %}
+                <h2>{{ produto.nome }}</h2>
+                <p>{{ produto.valor }}</p>
+                <button class="editar">Editar Produto</button>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum produto encontrado para este usuário.</p>
+    {% endif %}
+    <button id="vender">VENDER</button>
+</body>
+<script>
+    var botaoCompra = document.getElementById('vender');
+
+    botaoCompra.addEventListener('click', function() {
+        window.location.href = '/HomePage/AddProduto';
+    });
+</script>
+</html>

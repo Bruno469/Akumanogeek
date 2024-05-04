@@ -9,11 +9,18 @@ from .models import Produtos
 
 def PageView(request):
         if request.user.is_authenticated:
-            produtos = Produtos.objects.all()
-            return render(request, 'homepage/homepage.html', {'produtos': produtos})
+            nome = request.user
+            email = request.user.email
+            return render(request, 'homepage/index.html', {'nome': nome, 'email': email})
         else:
             return HttpResponse('Usuario não conectado')
 
+def SellView(request):
+        if request.user.is_authenticated:
+            produtos = Produtos.objects.filter(user=request.user)
+            return render(request, 'homepage/pagina3.html', {'produtos': produtos})
+        else:
+            return HttpResponse('Usuario não conectado')
 
 def Add_Produto(request):
     if request.method == 'POST':
