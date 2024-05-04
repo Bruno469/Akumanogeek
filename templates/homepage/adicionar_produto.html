@@ -9,6 +9,15 @@
     </head>    
 <body>
     <h2>Adicionar Produto</h2>
+    {% if form.errors %}
+        <div class="error-message">
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <form id="tagForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>name</p>
@@ -30,8 +39,12 @@
         <ul id="tagList">
             <!-- Aqui as tags serão exibidas -->
         </ul>
-        <input type="text" id="tagInput" placeholder="Digite uma tag e pressione Enter"><br>
-        <p>valor:</p>
+        <input type="text" id="tagInput" placeholder="Digite uma tag e pressione Enter">
+        <br>
+        <p>quantidade</p>
+        {{ form.quantidade }}
+        <br>
+        <p>valor (por unidade):</p>
         {{ form.valor }}
         <br>
         <button type="submit">Adicionar Produto</button>

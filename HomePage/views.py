@@ -25,22 +25,29 @@ def SellView(request):
 def Add_Produto(request):
     if request.method == 'POST':
         form = ProdutoForm(request.POST, request.FILES)
+        print("Formulário recebido:", form)  # Adicionando print para verificar o formulário recebido
         if form.is_valid():
             nome = form.cleaned_data['nome']
             imagem = form.cleaned_data['imagem']
+            description = form.cleaned_data['description']
+            quantidade = form.cleaned_data['quantidade']
             valor = form.cleaned_data['valor']
             tags = request.POST.getlist('tags[]')
+            print("Dados do formulário válidos.")  # Adicionando print para verificar se os dados do formulário são válidos
 
             # Obtenha o ID do usuário atual
             user_id = request.user.id
+            print("ID do usuário atual:", user_id)  # Adicionando print para verificar o ID do usuário atual
 
             try:
                 # Salve o produto no banco de dados com o ID do usuário
-                produto = Produtos.objects.create(user_id=user_id, nome=nome, imagem=imagem, valor=valor)
+                produto = Produtos.objects.create(user_id=user_id, nome=nome, description=description, imagem=imagem, valor=valor, quantidade=quantidade)
                 produto.tags.add(*[tag.strip() for tag in tags.split(',')])
+                print("Produto criado com sucesso.")  # Adicionando print para verificar se o produto foi criado com sucesso
 
-                return redirect('HomePage')
+                return redirect('HomePage/ProdutosSell')
             except Exception as e:
+                print("Erro ao criar o produto:", e)  # Adicionando print para verificar se há algum erro ao criar o produto
                 return render(request, 'homepage/adicionar_produto.html', {'form': form, 'error_message': str(e)})
     else:
         form = ProdutoForm()

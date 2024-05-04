@@ -112,3 +112,7 @@ background-color: #8e0000;
     max-width: 100%;
     height: auto;
 }
+
+.error-message {
+    color: white;
+}
