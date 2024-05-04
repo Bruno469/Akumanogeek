@@ -6,7 +6,7 @@ class Tag(models.Model):
     nome = models.CharField(max_length=12, unique=True)
 
 class Produtos(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     nome = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
     tags = models.ManyToManyField(Tag, blank=True)

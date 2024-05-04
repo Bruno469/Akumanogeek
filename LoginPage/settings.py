@@ -75,14 +75,22 @@ WSGI_APPLICATION = 'LoginPage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'db-88tqtrs122rg',
+#        'USER': 'db-88tqtrs122rg',
+#        'PASSWORD': '97ycPdMWOntZD2RiZttH5rxs',
+#        'HOST': 'up-es-mad1-mysql-1.db.run-on-seenode.com',
+#        'PORT': '11550',
+#    }
+#}
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db-88tqtrs122rg',
-        'USER': 'db-88tqtrs122rg',
-        'PASSWORD': '97ycPdMWOntZD2RiZttH5rxs',
-        'HOST': 'up-es-mad1-mysql-1.db.run-on-seenode.com',
-        'PORT': '11550',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'backup_db.sqlite3',  # Banco de dados local de backup
     }
 }
 

@@ -18,7 +18,7 @@
   {% for produto in produtos %}
     <div class="produtos">
       {% if produto.imagem %}
-          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        <img src="{{ produto.imagem }}" alt="{{ produto.nome }}">
       {% endif %}
       <h2>{{ produto.nome }}</h2>
       <p>{{ produto.description }}</p>

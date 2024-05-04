@@ -14,12 +14,11 @@ def PageView(request):
         else:
             return HttpResponse('Usuario não conectado')
 
+
 def Add_Produto(request):
     if request.method == 'POST':
-        # Se for uma requisição POST, processe os dados do formulário
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
-            # Se o formulário for válido, obtenha os dados do formulário
             nome = form.cleaned_data['nome']
             imagem = form.cleaned_data['imagem']
             valor = form.cleaned_data['valor']
@@ -32,16 +31,15 @@ def Add_Produto(request):
                 # Salve o produto no banco de dados com o ID do usuário
                 produto = Produtos.objects.create(user_id=user_id, nome=nome, imagem=imagem, valor=valor)
                 produto.tags.add(*[tag.strip() for tag in tags.split(',')])
-                
-                # Redirecione para a página de sucesso
-                return redirect('homepage')  # Assuming 'homepage' is the name of your homepage URL
+
+                return redirect('HomePage')
             except Exception as e:
-                # Se houver algum erro, retorne o formulário com os erros
                 return render(request, 'homepage/adicionar_produto.html', {'form': form, 'error_message': str(e)})
     else:
-        # Se for uma requisição GET, renderize o formulário vazio
         form = ProdutoForm()
     return render(request, 'homepage/adicionar_produto.html', {'form': form})
+
+
 
 def Edit_Produto(request, objeto_id=None):
     if objeto_id:
