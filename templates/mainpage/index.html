@@ -5,23 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main.css' %}">
-    <title>AkUMA NO GEEK - Produtos</title>
+    <title>AkUMANOGEEK - Produtos</title>
 </head>
 <body>
-    <form method="GET" action="{% url 'search' %}">
+    <a href="{% url 'HomePage:homepage' %}">
+        <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="AkumanoGeekLogo">
+    </a>
+    <form method="GET">
         <div class="home">
-            <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="Akuma no Geek Logo">
             <input type="text" placeholder="O que você está procurando?">
             <button type="submit">Buscar</button>
         </div>
     </form>
     <div class="Produtos">
         <h1>Produtos Disponíveis</h1>
-        <ul>
-            <li>Produto 1</li>
-            <li>Produto 2</li>
-            <li>Produto 3</li>
-        </ul>
+        <div class="produtos">
+            {% for produto in produtos %}
+            <a href="{% url 'visualizar_produto' produto.id %}">
+                <div class="produto">
+                    <img src="media/{{ produto.imagem.url|cut:'/media/' }}" alt="{{ produto.nome }}">
+                    <h3>{{ produto.nome }}</h3>
+                    <br>
+                    <p>R${{ produto.valor }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

@@ -14,6 +14,6 @@ class Produtos(models.Model):
     imagem = models.ImageField(upload_to='')
     quantidade = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
-class UserImg(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    imgUSER = models.ImageField(upload_to='')
+class PerfilUsuario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    imagem_perfil = models.ImageField(upload_to='', default='media/default.avif')

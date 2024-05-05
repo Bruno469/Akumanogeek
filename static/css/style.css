@@ -5,17 +5,15 @@
   box-sizing: border-box;
 }
 
-/* Estilos para o corpo da página */
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #FF416C, #FF4B2B); /* Gradiente de cores bonitas */
+  background: linear-gradient(to bottom, #FF416C, #333);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-/* Container principal */
 .main-login {
   display: flex;
   justify-content: center;

@@ -6,7 +6,7 @@ from django.conf import settings
 app_name = 'HomePage'
 
 urlpatterns = [
-    path('', views.PageView, name='homepage'),
+    path('', views.upload_image, name='homepage'),
     path('AddProduto', views.Add_Produto, name='add_produto'),
     path('AddProduto/<int:objeto_id>', views.Add_Produto, name='add_produto'),
     path('ProdutosSell', views.SellView, name='SellView'),

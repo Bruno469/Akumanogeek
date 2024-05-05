@@ -1,5 +1,5 @@
 from django import forms
-from .models import Produtos, UserImg
+from .models import Produtos, PerfilUsuario
 from django.core.validators import MinValueValidator
 
 class ProdutoForm(forms.ModelForm):
@@ -17,9 +17,7 @@ class ProdutoForm(forms.ModelForm):
             raise forms.ValidationError("O valor deve ser maior que zero.")
         return valor
 
+class ImageUploadForm(forms.ModelForm):
     class Meta:
-        model = UserImg
-        fields = ['user', 'imgUSER']
-        widgets = {
-            'imgUSER':forms.ClearableFileInput(attrs={'id':'seletorImagem', 'accept': 'image/*'})
-        }
+        model = PerfilUsuario
+        fields = ['imagem_perfil']

@@ -1,10 +1,10 @@
-from django.shortcuts import render
-from HomePage.models import Produtos
+from django.shortcuts import render, get_object_or_404
+from HomePage.models import Produtos, Tag
 
-def search(request):
-    query = request.GET.get('q')
-    if query:
-        results = Produtos.objects.filter(nome__icontains=query)
-    else:
-        results = []
-    return render(request, 'mainpage/index.html', {'results': results})
+def lista_produtos(request):
+    produtos = Produtos.objects.all()
+    return render(request, 'mainpage/index.html', {'produtos': produtos})
+
+def visualizar_produto(request, produto_id):
+    produto = get_object_or_404(Produtos, pk=produto_id)
+    return render(request, 'mainpage/visualizer.html', {'produto': produto})
