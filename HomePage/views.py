@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from .forms import ProdutoForm, ImageUploadForm
 from django.http import JsonResponse
-from .models import Produtos, PerfilUsuario, Tag
+from .models import Produtos, PerfilUsuario, Tag, carrinho
 import json
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -77,20 +77,41 @@ def Add_Produto(request):
 
 def editar_produto(request, produto_id):
     produto = get_object_or_404(Produtos, pk=produto_id)
-
     if request.method == 'POST':
         form = ProdutoForm(request.POST, request.FILES, instance=produto)
         if form.is_valid():
             form.save()
-            return redirect('produto/', produto_id=produto_id)
+            return redirect('LoginPage:produto', produto_id=produto_id)
     else:
         form = ProdutoForm(instance=produto)
-
-    return render(request, 'homepage/editar_produto.html', {'form': form, 'produto': produto})
+    return render(request, 'homepage/editar_produto.html', {'form': form, 'produto': produto, 'produto_id': produto_id})
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('/login'))
+
+def deletar_produto(request, produto_id):
+    produto = get_object_or_404(Produtos, pk=produto_id)
+    if request.method == 'POST':
+        produto.delete()
+        return HttpResponseRedirect(reverse('HomePage:ProdutosSell'))
+
+def adicionar_carrinho(request, produto_id):
+    produto = get_object_or_404(Produtos, pk=produto_id)
+    carrinho_usuario, created = carrinho.objects.get_or_create(user=request.user)
+    carrinho_usuario.carrinho_compras.add(produto)
+    return HttpResponseRedirect(reverse('main:lista_produtos'))
+
+def mostrar_produtos_carrinho(request):
+    carrinho_usuario = carrinho.objects.filter(user=request.user).first()
+    
+    if carrinho_usuario:
+        produtos_no_carrinho = carrinho_usuario.carrinho_compras.all()
+    else:
+        produtos_no_carrinho = []
+
+    return render(request, 'mainpage/carrinho.html', {'produtos_no_carrinho': produtos_no_carrinho})
+
 
 # class HomePageView(request):
         # Renderiza a pagina de homepage

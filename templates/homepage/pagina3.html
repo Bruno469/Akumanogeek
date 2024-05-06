@@ -100,7 +100,7 @@
                 {% endif %}
                 <h2>{{ produto.nome }}</h2>
                 <p>{{ produto.valor }}</p>
-                <button class="editar">Editar Produto</button>
+                <button class="editar" data-produto-id="{{ produto.id }}">Editar Produto</button>
             </div>
         {% endfor %}
     {% else %}
@@ -108,9 +108,17 @@
     {% endif %}
     <button id="vender">VENDER</button>
 </body>
-{% if error_message %}
 <script>
-    alert("{{ error_message }}");
+    var botoesEditar = document.querySelectorAll('.editar');
+
+    botoesEditar.forEach(function(botao) {
+        botao.addEventListener('click', function() {
+            var produtoId = botao.getAttribute('data-produto-id');
+            var urlEdicao = '/HomePage/EditProduto/' + produtoId;
+            
+            window.location.href = urlEdicao;
+        });
+    });
 
     var botaoCompra = document.getElementById('vender');
 
@@ -118,5 +126,4 @@
         window.location.href = '/HomePage/AddProduto';
     });
 </script>
-{% endif %}
 </html>

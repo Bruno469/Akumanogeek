@@ -1,0 +1,50 @@
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'carro.css' %}">
+  <boddy>
+      <div class="container">
+        <img id="icone-logo" src="{{ request.user.perfilusuario.imagem_perfil.url }}">
+      
+<div class="ls-cart">
+      <header class="ls-cart-header">
+        <span class="ls-ico-cart ls-float-left"></span>
+        <small>MEU CARRINHO</small>
+        <strong class="ld-perfil"><p class="counter" id="contador"></p> produto(s)</strong>
+      </header>
+      <div class="container">
+        {% for produto in produtos_no_carrinho %}
+        <div class="product">
+            <span class="product-name">{{ produto.nome }} - R$ {{ produto.valor }}</span>
+            <button class="remove-button">Remover</button>
+        </div>
+        {% endfor %}
+      </div>
+    <footer class="ls-cart-footerls-txt-center">
+      <p>Valor final: </p><p id="valor-final"></p>
+      <button class="botao-verde">Finalizar Compra</button>
+    </footer>
+</div>
+</form>
+</div>
+</div>
+</boddy>
+<script>
+  const lista = document.getElementById('minha-lista');
+  const contador = document.getElementById('contador');
+  const valorFinal = document.getElementById('valor-final');
+  function atualizarContador() {
+      contador.textContent = lista.children.length;
+  }
+  function calcularValorFinal() {
+        let total = 0;
+        for (let produto of lista.children) {
+            const valorTexto = produto.textContent.split(' - R$ ')[1];
+            total += parseFloat(valorTexto);
+        }
+        valorFinal.textContent = total.toFixed(2); 
+    }
+  
+    atualizarContador();
+    calcularValorFinal();
+</script>
+</html>

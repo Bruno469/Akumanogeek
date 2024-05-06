@@ -5,6 +5,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+app_name = 'main'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.lista_produtos, name='lista_produtos'),

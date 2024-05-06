@@ -15,13 +15,17 @@
         <p class="product-price">R$ {{ produto.valor }}</p>
         <p class="product-quantity">Quantidade disponivel: {{ produto.quantidade }}</p>
         <div class="rating">
+        <form action="{% url 'HomePage:adicionar_carrinho' produto_id=produto.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Adicionar ao Carrinho</button>
+        </form>
             <h3>Avalie esse produto:</h3>
             <div class="stars">
                 <span class="star" data-value="1">&#9733;</span>
                 <span class="star" data-value="2">&#9733;</span>
                 <span class="star" data-value="3">&#9733;</span>
                 <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>1
+                <span class="star" data-value="5">&#9733;</span>
             </div>
         </div>
     </div>

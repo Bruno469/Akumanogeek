@@ -50,3 +50,16 @@ body {
 .star.active {
     color: #ffcc00; /* Amarelo */
 }
+
+button {
+    padding: 10px 20px;
+    background-color: #d8232a;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b20c10;
+}

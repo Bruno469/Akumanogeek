@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(135deg, #dd1e04, #0d0d0e);
+}
+
+.container {
+    max-width: 800px; /* aumentando a largura da div principal */
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative; /* tornando a posição relativa para posicionar a imagem */
+}
+
+#icone-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 10px; /* ajustando a posição da imagem */
+    left: 10px; /* ajustando a posição da imagem */
+}
+
+.product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.remove-button {
+    background-color: #f50606;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #d81608;
+}
+
+.ls-cart{
+  min-height: 500px;
+}
+
+.ls-cart-header {
+  margin-left: 10%;
+  margin-bottom: 5%;
+  transform: translateY(-10px);
+}
+
+.ls-cart-footerls-txt-center {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 4%;
+}
+
+.botao-verde {
+  background-color: #4CAF50; /* Cor de fundo verde */
+  color: white; /* Cor do texto branco */
+  padding: 10px 20px; /* Espaçamento interno */
+  font-size: 16px; /* Tamanho da fonte */
+  border: none; /* Sem borda */
+  border-radius: 5px; /* Borda arredondada */
+  cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+  transition: background-color 0.3s ease; /* Transição suave */
+}
+
+.botao-verde:hover {
+  background-color: #45a049; /* Cor de fundo verde mais escura ao passar o mouse */
+}
