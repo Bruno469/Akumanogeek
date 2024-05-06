@@ -20,6 +20,7 @@
     <div class="container">
         <img id="icone-logo" src="{% static 'logo.jpeg' %}">
         <div class="title">ENDEREÇO DE ENVIO</div>
+        <p id="#cep-error"></p>
         <div class="content">
             <form action="#"  onsubmit="return validarFormulario()">
                 <div class="user-details">
@@ -90,7 +91,75 @@
         <div class="produto" data-valor="{{ produto.valor }}"></div>
     {% endfor %}
     <script type="text/javascript">
-        const produtos = document.querySelectorAll('.produto');
+     // Função para buscar o endereço pelo CEP
+function buscaEndereco(cep) {
+    // Verifica se o campo CEP possui valor informado.
+    if (cep.length !== 8) {
+        alert('CEP inválido, tente novamente');
+        return;
+    }
+
+    // Monta a URL para a requisição
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+    // Realiza a requisição e trata a resposta
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                alert('CEP não encontrado!');
+                return;
+            }
+
+            // Aqui você tem acesso aos dados do endereço
+            console.log(data);
+            // Exemplo: atualizar os campos com os dados
+            document.querySelector('#cidade').value = data.localidade;
+            document.querySelector('#bairro').value = data.bairro;
+            document.querySelector('#rua').value = data.logradouro;
+            document.querySelector('#estado').value = data.uf;
+        })
+        .catch(error => console.error('Falha na requisição', error));
+}
+
+// Adiciona um evento para buscar o endereço quando o CEP for digitado
+document.addEventListener('DOMContentLoaded', () => {
+    const inputCep = document.querySelector('input[placeholder="Insira seu CEP"]');
+    inputCep.addEventListener('blur', (event) => {
+        const cep = event.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+        buscaEndereco(cep);
+    });
+});
+
+// Função para validar o formulário
+function validarFormulario() {
+    // Verifica se os campos obrigatórios estão preenchidos
+    const camposObrigatorios = document.querySelectorAll('input[required]');
+    for (let campo of camposObrigatorios) {
+        if (!campo.value.trim()) {
+            alert('Preencha todos os campos obrigatórios');
+            return false;
+        }
+    }
+
+    // Verifica se um método de entrega foi selecionado
+    const metodoEntregaSelecionado = document.querySelector('input[name="entrega"]:checked');
+    if (!metodoEntregaSelecionado) {
+        alert('Escolha um método de entrega');
+        return false;
+    }
+
+    // Verifica se o CEP é válido
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');
+    if (cep.length !== 8 || document.getElementById('cep-error').style.display === 'block') {
+        // Mantém a mensagem de erro visível se o CEP for inválido
+        document.getElementById('cep-error').style.display = 'block';
+        return false;
+    }
+
+    return true;
+}
+const produtos = document.querySelectorAll('.produto');
 const normalRadio = document.querySelector('input[value="normal"]');
 const expressRadio = document.querySelector('input[value="express"]');
 let total = 0;

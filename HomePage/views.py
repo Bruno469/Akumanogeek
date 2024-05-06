@@ -92,11 +92,16 @@ def logout_view(request):
 
 def deletar_produto(request, produto_id):
     carrinho_usuario = carrinho.objects.filter(user=request.user).first()
+
     if carrinho_usuario:
         produto = Produtos.objects.get(pk=produto_id)
         carrinho_usuario.carrinho_compras.remove(produto)
-    
-    return redirect('HomePage:mostrar_produtos_carrinho')
+
+def produto_deletar(request, produto_id):
+    produto = get_object_or_404(Produtos, pk=produto_id)
+    if request.method == 'POST':
+        produto.delete()
+        return HttpResponseRedirect(reverse('HomePage:SellView'))  
 
 def adicionar_carrinho(request, produto_id):
     produto = get_object_or_404(Produtos, pk=produto_id)

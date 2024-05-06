@@ -30,7 +30,7 @@
 
             <button type="submit">Salvar</button>
         </form>
-        <form action="{% url 'HomePage:deletar_produto' produto_id=produto.id %}" method="post">
+        <form action="{% url 'HomePage:produto_deletar' produto_id=produto.id %}" method="post">
             {% csrf_token %}
             <button type="submit">Deletar Produto</button>
         </form>

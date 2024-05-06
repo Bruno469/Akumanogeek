@@ -14,6 +14,15 @@ body {
     max-width: 600px;
 }
 
+#seta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+}
+
 .product img {
     max-width: 100%;
     height: auto;

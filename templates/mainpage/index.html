@@ -20,8 +20,10 @@
             </a>
         </div>
         <div id="search-bar">
-            <input id="search-input" type="text" placeholder="O que você está procurando?">
-            <button id="search-button" type="submit">Buscar</button>
+            <form method="get">
+                <input id="search-input" type="text" name="q" placeholder="O que você está procurando?">
+                <button id="search-button" type="submit">Buscar</button>
+            </form>
         </div>
         <div class="carrinho">
             <a href="{% url 'HomePage:mostrar_produtos_carrinho' %}">
@@ -29,6 +31,27 @@
             </a>
         </div>
     </header>
+    <ul>
+        {% for produto in resultados %}
+            <li>
+            <div class="pesquisa">
+                <a href="{% url 'visualizar_produto' produto.id %}">
+                    <div class="pesquisa">
+                        <img src="media/{{ produto.imagem.url|cut:'/media/' }}" alt="{{ produto.nome }}">
+                        <h2>{{ produto.nome }}</h2>
+                        <p><b>R${{ produto.valor }}</b></p>
+                        <form action="{% url 'HomePage:adicionar_carrinho' produto_id=produto.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn" type="submit">Adicionar ao Carrinho</button>
+                        </form>
+                    </div>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+            <li>Nenhum produto encontrado.</li>
+        {% endfor %}
+    </ul>
     <h2 class="title">Mais vendidos</h2>
     <div class="carousel-container">
         <button class="carousel-arrow left" onclick="scrollCarousel('carousel', -1)">❮</button>
@@ -71,7 +94,6 @@
             </div>
         </div>
     </div>
-
     <script>
         function scrollCarousel(carouselId, direction) {
         const carousel = document.getElementById(carouselId);
