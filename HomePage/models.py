@@ -16,4 +16,4 @@ class Produtos(models.Model):
 
 class PerfilUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    imagem_perfil = models.ImageField(upload_to='', default='media/default.avif')
+    imagem_perfil = models.ImageField(upload_to='', default='static/logo.jpeg')

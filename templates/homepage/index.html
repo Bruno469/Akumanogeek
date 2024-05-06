@@ -11,12 +11,12 @@
 <body>
 <div class="perfil-container">
 
-    <!--seta para saída da página-->
+  <a id="seta" href="/">
     <svg id="seta" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
     </svg>
-
-  <img id="imagemPerfil" src="qq{{ request.user.perfilusuario.imagem_perfil.url|cut:'/media/' }}" alt="Imagem de Perfil">
+  </a>
+  <img id="imagemPerfil" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="Imagem de Perfil">
   <label for="seletorImagem"
   class="botao-customizado"><svg id="botao" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -26,23 +26,94 @@
 
   <form id="formImagem" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <a type="hidden" href="/media/camiseta_einstein_tattoo_albert_einstein_63057_variacao_12665_1_20201211183646_MLgUt7y.webp"></a><br>
+    <input type="file" name="imagem_perfil" id="seletorImagem">
   </form>
-
-
     <div class="perfil-info">
         <p><strong>Nome:</strong> <span id="nomeComprador">{{ nome }}</span></p>
         <p><strong>Email:</strong> <span id="emailComprador">{{ email }}</span></p>
-
     </div>
   </div>
 
   <div class="compras">
     <button id="compra">COMPRAS</button><br>
     <button id="venda">VENDAS </button><br><br>
-    <button class="sair">SAIR<i class="bi bi-box-arrow-in-right"></i></button></div><br>
+    <button class="sair">SAIR<i class="bi bi-box-arrow-in-right"></i></button>
+  </div>
+  <br>
   <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const botaoSair = document.querySelector('.sair');
+        botaoSair.addEventListener('click', function() {
+            fetch('logout/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+            }).then(function(response) {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    window.location.reload();
+                }
+            });
+        });
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+
+
+        document.getElementById("seletorImagem").addEventListener("change", function() {
+        document.getElementById("formImagem").submit();
+      });
+        function atualizarPerfil(nome, email) {
+        document.getElementById('nomeComprador').textContent = nome;
+        document.getElementById('emailComprador').textContent = email;
+      }
+
+
+      window.onload = function() {
+        var imagemSalva = localStorage.getItem('imagemSalva');
+        var imagemPerfil = document.getElementById('imagemPerfil');
+
+
+        if(imagemSalva) {
+            imagemPerfil.src = imagemSalva;
+        } 
+        else {
+
+            imagemPerfil.src = 'dowload.jpg';
+        }
+    };
+      
+      document.getElementById('seletorImagem').addEventListener('change', function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var imagemBase64 = reader.result;
+            document.getElementById('imagemPerfil').src = imagemBase64;
+            localStorage.setItem('imagemSalva', imagemBase64);
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+
+    window.onload = function() {
+        var imagemSalva = localStorage.getItem('imagemSalva');
+        if(imagemSalva) {
+            document.getElementById('imagemPerfil').src = imagemSalva;
+        }
+    };
     var botaoCompra = document.getElementById('venda');
 
     botaoCompra.addEventListener('click', function() {

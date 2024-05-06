@@ -9,7 +9,7 @@
 </head>
 <body>
     <a href="{% url 'HomePage:homepage' %}">
-        <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="AkumanoGeekLogo">
+        <img class="imgLogo" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="AkumanoGeekLogo">
     </a>
     <form method="GET">
         <div class="home">

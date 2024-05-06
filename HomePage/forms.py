@@ -21,3 +21,4 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = PerfilUsuario
         fields = ['imagem_perfil']
+        

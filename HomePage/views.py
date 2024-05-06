@@ -10,6 +10,8 @@ import json
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.contrib.auth import logout
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -26,7 +28,7 @@ def upload_image(request):
             form = ImageUploadForm(request.POST, request.FILES, instance=request.user.perfilusuario)
             if form.is_valid():
                 form.save()
-                return redirect('HomePage')
+                return redirect('/HomePage')
         else:
             return HttpResponse("O perfil do usuário não está definido.")
     else:
@@ -34,7 +36,7 @@ def upload_image(request):
             nome = request.user
             email = request.user.email
         else:
-            return HttpResponse('Usuário não conectado')
+            return redirect('/HomePage')
         form = ImageUploadForm(instance=request.user.perfilusuario)
     return render(request, 'homepage/index.html', {'nome': nome, 'email': email, 'form': form})
 
@@ -43,7 +45,7 @@ def SellView(request):
             produtos = Produtos.objects.filter(user=request.user)
             return render(request, 'homepage/pagina3.html', {'produtos': produtos})
         else:
-            return HttpResponse('Usuario não conectado')
+            return redirect('/login')
 
 def Add_Produto(request):
     if request.method == 'POST':
@@ -63,7 +65,7 @@ def Add_Produto(request):
                 for tag_text in tags:
                     tag, created = Tag.objects.get_or_create(nome=tag_text)
                     produto.tags.add(tag)
-                return redirect('/HomePage/ProdutosSell')  # Adicionado '/' antes de 'HomePage'
+                return redirect('/HomePage/ProdutosSell')
             except Exception as e:
                 error_message = "Erro ao criar o produto: {}".format(e)
                 return render(request, 'homepage/ProdutosSell', {'form': form, 'error_message': error_message})
@@ -73,15 +75,22 @@ def Add_Produto(request):
 
 
 
-def Edit_Produto(request, objeto_id=None):
-    if objeto_id:
-        # Se um objeto_id for fornecido, verifique se ele existe
-        objeto = get_object_or_404(MeuObjeto, pk=objeto_id)
-        if objeto.user != request.user:
-            return HttpResponseForbidden("Você não tem permissão.")
+def editar_produto(request, produto_id):
+    produto = get_object_or_404(Produtos, pk=produto_id)
+
+    if request.method == 'POST':
+        form = ProdutoForm(request.POST, request.FILES, instance=produto)
+        if form.is_valid():
+            form.save()
+            return redirect('produto/', produto_id=produto_id)
     else:
-        # Se nenhum objeto_id for fornecido, não há necessidade de verificar a permissão
-        objeto = None
+        form = ProdutoForm(instance=produto)
+
+    return render(request, 'homepage/editar_produto.html', {'form': form, 'produto': produto})
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('/login'))
 
 # class HomePageView(request):
         # Renderiza a pagina de homepage
