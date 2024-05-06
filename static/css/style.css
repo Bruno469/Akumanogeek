@@ -7,7 +7,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #FF416C, #333);
+  background: linear-gradient(135deg, #dd1e04, #0d0d0e);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,9 +29,8 @@ body {
   box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3); /* Sombra suave */
 }
 
-/* Título do formulário */
 .card-login h2 {
-  color: #FF5722; /* Cor laranja */
+  color: black;
   text-align: center;
   margin-bottom: 20px;
 }

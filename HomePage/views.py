@@ -36,7 +36,7 @@ def upload_image(request):
             nome = request.user
             email = request.user.email
         else:
-            return redirect('/HomePage')
+            return redirect('/login')
         form = ImageUploadForm(instance=request.user.perfilusuario)
     return render(request, 'homepage/index.html', {'nome': nome, 'email': email, 'form': form})
 
@@ -100,9 +100,24 @@ def adicionar_carrinho(request, produto_id):
     produto = get_object_or_404(Produtos, pk=produto_id)
     carrinho_usuario, created = carrinho.objects.get_or_create(user=request.user)
     carrinho_usuario.carrinho_compras.add(produto)
-    return HttpResponseRedirect(reverse('main:lista_produtos'))
+    return redirect('/')
 
-def mostrar_produtos_carrinho(request):
+
+def mostrar_produtos_carrinho(request, produto_id=None):
+    carrinho_usuario = carrinho.objects.filter(user=request.user).first()
+    if request.method == 'POST':
+        if produto_id is not None:
+            produto = get_object_or_404(Produtos, pk=produto_id)
+            carrinho_usuario.carrinho_compras.remove(produto)
+
+    if carrinho_usuario:
+        produtos_no_carrinho = carrinho_usuario.carrinho_compras.all()
+    else:
+        produtos_no_carrinho = []
+
+    return render(request, 'mainpage/carrinho.html', {'produtos_no_carrinho': produtos_no_carrinho})
+
+def Finalizar_Compra(request):
     carrinho_usuario = carrinho.objects.filter(user=request.user).first()
     
     if carrinho_usuario:
@@ -110,7 +125,7 @@ def mostrar_produtos_carrinho(request):
     else:
         produtos_no_carrinho = []
 
-    return render(request, 'mainpage/carrinho.html', {'produtos_no_carrinho': produtos_no_carrinho})
+    return render(request, 'mainpage/comprando.html', {'produtos_no_carrinho': produtos_no_carrinho})
 
 
 # class HomePageView(request):

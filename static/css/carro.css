@@ -81,16 +81,20 @@ body {
 }
 
 .botao-verde {
-  background-color: #4CAF50; /* Cor de fundo verde */
-  color: white; /* Cor do texto branco */
-  padding: 10px 20px; /* Espaçamento interno */
-  font-size: 16px; /* Tamanho da fonte */
-  border: none; /* Sem borda */
-  border-radius: 5px; /* Borda arredondada */
-  cursor: pointer; /* Cursor de ponteiro ao passar por cima */
-  transition: background-color 0.3s ease; /* Transição suave */
+  background-color: #4CAF50; 
+  color: white; 
+  padding: 10px 20px; 
+  font-size: 16px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
 }
 
 .botao-verde:hover {
-  background-color: #45a049; /* Cor de fundo verde mais escura ao passar o mouse */
+  background-color: #45a049;
+}
+
+.ls-cart-header, counter {
+  white-space: nowrap;
 }

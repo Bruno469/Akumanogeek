@@ -5,12 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main.css' %}">
-    <title>AkUMANOGEEK - Produtos</title>
+    <link rel="icon" href="{% static 'logo.jpeg' %}">
+    <title>AkUMANOGEEK</title>
 </head>
 <body>
     <header>
         <a href="{% url 'HomePage:homepage' %}">
-            <img class="imgLogo" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="AkumanoGeekLogo">
+            {% if request.user.is_authenticated %}
+                <img class="imgLogo" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="AkumanoGeekLogo">
+            {% else %}
+                <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="AkumanoGeekLogo">
+            {% endif %}
         </a>
         <div class="carrinho">
             <a href="{% url 'HomePage:mostrar_produtos_carrinho' %}">

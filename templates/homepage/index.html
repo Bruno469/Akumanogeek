@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="{% static 'userstyle.css' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="img\download.png">
+<link rel="icon" href="{% static 'logo.jpeg' %}">
 <title>Perfil</title>
 </head>
 <body>
@@ -16,7 +16,11 @@
         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
     </svg>
   </a>
-  <img id="imagemPerfil" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="Imagem de Perfil">
+  {% if request.user.perfilusuario.imagem_perfil %}
+    <img id="imagemPerfil" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="Imagem de Perfil">
+  {% else %}
+      <img id="imagemPerfil" src="" alt="Imagem de Perfil Padrão">
+  {% endif %}
   <label for="seletorImagem"
   class="botao-customizado"><svg id="botao" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -85,17 +89,7 @@
 
 
       window.onload = function() {
-        var imagemSalva = localStorage.getItem('imagemSalva');
         var imagemPerfil = document.getElementById('imagemPerfil');
-
-
-        if(imagemSalva) {
-            imagemPerfil.src = imagemSalva;
-        } 
-        else {
-
-            imagemPerfil.src = 'dowload.jpg';
-        }
     };
       
       document.getElementById('seletorImagem').addEventListener('change', function(event) {
@@ -107,13 +101,6 @@
         }
         reader.readAsDataURL(event.target.files[0]);
     });
-
-    window.onload = function() {
-        var imagemSalva = localStorage.getItem('imagemSalva');
-        if(imagemSalva) {
-            document.getElementById('imagemPerfil').src = imagemSalva;
-        }
-    };
     var botaoCompra = document.getElementById('venda');
 
     botaoCompra.addEventListener('click', function() {
