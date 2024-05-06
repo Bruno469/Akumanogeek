@@ -10,57 +10,50 @@
 </head>
 <body>
     <header>
-        <a href="{% url 'HomePage:homepage' %}">
-            {% if request.user.is_authenticated %}
-                <img class="imgLogo" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="AkumanoGeekLogo">
-            {% else %}
-                <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="AkumanoGeekLogo">
-            {% endif %}
-        </a>
+        <div class="profile-image">
+            <a href="{% url 'HomePage:homepage' %}">
+                {% if request.user.is_authenticated %}
+                    <img class="imgLogo" src="{{ request.user.perfilusuario.imagem_perfil.url }}" alt="AkumanoGeekLogo">
+                {% else %}
+                    <img class="imgLogo" src="{% static 'logo.jpeg' %}" alt="AkumanoGeekLogo">
+                {% endif %}
+            </a>
+        </div>
+        <div id="search-bar">
+            <input id="search-input" type="text" placeholder="O que você está procurando?">
+            <button id="search-button" type="submit">Buscar</button>
+        </div>
         <div class="carrinho">
             <a href="{% url 'HomePage:mostrar_produtos_carrinho' %}">
                 <img src="{% static 'carrinho.png' %}" alt="Carrinho de Compras">
             </a>
         </div>
-        <form method="GET">
-            <div class="home">
-                <input type="text" placeholder="O que você está procurando?">
-            </div>
-            <button class="procu" type="submit">Buscar</button>
-        </form>
-    </header>    
     </header>
-
-    <div class="carousel-container" id="manga-carousel-container">
-        <button class="carousel-arrow left" onclick="scrollCarousel('manga-carousel', -1)">❮</button>
-        <h3 id="manga">Mais vendidos</h3>
-        <div id="manga-carousel" class="carousel" data-current-index="0">
-        <<div class="container">
-            <div class="Produtos">
-                <div class="produtos">
-                    {% for produto in produtos %}
-                    <a href="{% url 'visualizar_produto' produto.id %}">
-                        <div class="produto">
-                            <img src="media/{{ produto.imagem.url|cut:'/media/' }}" alt="{{ produto.nome }}">
-                            <h2>{{ produto.nome }}</h2>
-                            <p><b></b>R${{ produto.valor }}</b></p>
-                            <form action="{% url 'HomePage:adicionar_carrinho' produto_id=produto.id %}" method="post">
-                                {% csrf_token %}
-                                <button class="btn" type="submit">Adicionar ao Carrinho</button>
-                            </form>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
+    <h2 class="title">Mais vendidos</h2>
+    <div class="carousel-container">
+        <button class="carousel-arrow left" onclick="scrollCarousel('carousel', -1)">❮</button>
+        <div id="carousel" class="carousel" data-current-index="0">
+            {% for produto in produtos %}
+            <div class="carousel-item">
+                <a href="{% url 'visualizar_produto' produto.id %}">
+                    <div class="produto">
+                        <img src="media/{{ produto.imagem.url|cut:'/media/' }}" alt="{{ produto.nome }}">
+                        <h2>{{ produto.nome }}</h2>
+                        <p><b>R${{ produto.valor }}</b></p>
+                        <form action="{% url 'HomePage:adicionar_carrinho' produto_id=produto.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn" type="submit">Adicionar ao Carrinho</button>
+                        </form>
+                    </div>
+                </a>
             </div>
+            {% endfor %}
         </div>
-    
-        </div>
-        <button class="carousel-arrow right" onclick="scrollCarousel('manga-carousel', 1)">❯</button>
-    
+        <button class="carousel-arrow right" onclick="scrollCarousel('carousel', 1)">❯</button>
+    </div>    
+    <h1 class="title2">Todos os Produtos Disponíveis</h1>
     <div class="container">
         <div class="Produtos">
-            <h1>Todos os Produtos Disponíveis</h1>
             <div class="produtos">
                 {% for produto in produtos %}
                 <a href="{% url 'visualizar_produto' produto.id %}">
@@ -78,33 +71,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function scrollCarousel(carouselId, direction) {
+        const carousel = document.getElementById(carouselId);
+        const width = carousel.offsetWidth;
+        const scrollAmount = direction * width;
+        carousel.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+    </script>
 </body>
-<script>
-    // Função para alternar a visibilidade do menu
-function toggleMenu() {
-    var menu = document.getElementById("side-menu");
-    if (menu.style.width === '250px') {
-         menu.style.width = '0';
-    } else {
-        menu.style.width = '250px';
-    }
-}
-
-function scrollCarousel(carouselId, direction) {
-    const carousel = document.getElementById(carouselId);
-    let items = carousel.getElementsByClassName('carousel-item');
-    let currentIndex = parseInt(carousel.getAttribute('data-current-index')) || 0;
-
-    currentIndex += direction;
-    if (currentIndex < 0) {
-        currentIndex = items.length - 1;
-    } else if (currentIndex >= items.length) {
-        currentIndex = 0;
-    }
-
-    carousel.setAttribute('data-current-index', currentIndex.toString());
-    const scrollAmount = items[currentIndex].offsetLeft - carousel.offsetLeft;
-    carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-}
-</script>
 </html>

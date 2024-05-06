@@ -98,3 +98,12 @@ body {
 .ls-cart-header, counter {
   white-space: nowrap;
 }
+
+#seta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+}

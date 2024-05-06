@@ -101,10 +101,15 @@
         }
         reader.readAsDataURL(event.target.files[0]);
     });
-    var botaoCompra = document.getElementById('venda');
+    var botaoVender = document.getElementById('venda');
+
+    botaoVender.addEventListener('click', function() {
+      window.location.href = '/HomePage/ProdutosSell';
+    });
+    var botaoCompra = document.getElementById('compra');
 
     botaoCompra.addEventListener('click', function() {
-      window.location.href = '/HomePage/ProdutosSell';
+        window.location.href = '/HomePage/Carrinho';
     });
   </script>
 </body>

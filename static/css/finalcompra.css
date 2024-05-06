@@ -190,3 +190,12 @@ cursor: pointer;
   font-weight: bold;
   margin-top: 4%;
 }
+
+#seta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+}

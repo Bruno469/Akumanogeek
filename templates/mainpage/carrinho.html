@@ -5,86 +5,92 @@
     <link rel="icon" href="{% static 'logo.jpeg' %}">
   </head>
   <body>
-      <div class="container">
-        <img id="icone-logo" src="{{ request.user.perfilusuario.imagem_perfil.url }}">
-      
-        <div class="ls-cart">
-          <header class="ls-cart-header">
-            <span class="ls-ico-cart ls-float-left"></span>
-            <small>MEU CARRINHO</small>
-            <strong class="ld-perfil"><p class="counter" id="contador"></p> produto(s)</strong>
-          </header>
-          <div class="container" id="minha-lista">
-            {% for produto in produtos_no_carrinho %}
-            <div class="product">
-                <span class="product-name">{{ produto.nome }} - R$ {{ produto.valor }}</span>
-                <form id="remover-produto-form-{{ produto.id }}" method="post" action="{% url 'HomePage:mostrar_produtos_carrinho' %}">
-                  {% csrf_token %}
-                  <button class="remove-button" type="submit">Remover</button>
-                </form>              
-            </div>
-            {% endfor %}
+    <a id="seta" href="/">
+      <svg id="seta" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+      </svg>
+    </a>
+    <div class="container">
+      <img id="icone-logo" src="{{ request.user.perfilusuario.imagem_perfil.url }}">
+    
+      <div class="ls-cart">
+        <header class="ls-cart-header">
+          <span class="ls-ico-cart ls-float-left"></span>
+          <small>MEU CARRINHO</small>
+          <strong class="ld-perfil"><p class="counter" id="contador"></p> produto(s)</strong>
+        </header>
+        <div class="container" id="minha-lista">
+          {% for produto in produtos_no_carrinho %}
+          <div class="product">
+              <span class="product-name">{{ produto.nome }} - R$ {{ produto.valor }}</span>
+              <form id="remover-produto-form-{{ produto.id }}" method="post" action="{% url 'HomePage:deletar_produto' produto.id %}">
+                {% csrf_token %}
+                <button class="remove-button" type="submit">Remover</button>
+            </form>            
           </div>
-          <footer class="ls-cart-footerls-txt-center">
-            <p>Valor final: </p><p id="valor-final"></p>
-            <button class="botao-verde" id="comprar">Finalizar Compra</button>
-          </footer>
+          {% endfor %}
         </div>
+        <footer class="ls-cart-footerls-txt-center">
+          <p>Valor final: </p><p id="valor-final"></p>
+          <button class="botao-verde" id="comprar">Finalizar Compra</button>
+        </footer>
       </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const lista = document.getElementById('minha-lista');
+          const contador = document.getElementById('contador');
+          const valorFinal = document.getElementById('valor-final');
+
+          function atualizarContador() {
+              contador.textContent = lista.children.length;
+          }
+
+          function calcularValorFinal() {
+              let total = 0;
+              for (let produto of lista.children) {
+                  const valorTexto = produto.textContent.split(' - R$ ')[1];
+                  total += parseFloat(valorTexto);
+              }
+              valorFinal.textContent = total.toFixed(2); 
+          }
+
+          const botaoCompra = document.getElementById('comprar');
+          botaoCompra.addEventListener('click', function() {
+            window.location.href = '/HomePage/Comprar';
+          });
+
+          const botoesRemover = document.querySelectorAll('.remove-button');
+          botoesRemover.forEach(botao => {
+              botao.addEventListener('click', function(event) {
+                  event.preventDefault(); 
+                  const form = this.closest('form');
+                  const formData = new FormData(form);
+
+                  fetch(form.action, {
+                      method: 'POST',
+                      body: formData,
+                      headers: {
+                          'X-CSRFToken': '{{ csrf_token }}'
+                      }
+                  })
+                  .then(response => {
+                      if (response.ok) {
+                          window.location.reload(); 
+                      } else {
+                          console.error('Erro ao remover produto:', response.statusText);
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Erro ao remover produto:', error);
+                  });
+              });
+          });
+
+          atualizarContador();
+          calcularValorFinal();
+      });
+    </script>
   </body>
-  <script src="{% static 'finalcompra.js' %}">
-    document.addEventListener('DOMContentLoaded', function() {
-        const lista = document.getElementById('minha-lista');
-        const contador = document.getElementById('contador');
-        const valorFinal = document.getElementById('valor-final');
-
-        function atualizarContador() {
-            contador.textContent = lista.children.length;
-        }
-
-        function calcularValorFinal() {
-            let total = 0;
-            for (let produto of lista.children) {
-                const valorTexto = produto.textContent.split(' - R$ ')[1];
-                total += parseFloat(valorTexto);
-            }
-            valorFinal.textContent = total.toFixed(2); 
-        }
-
-        atualizarContador();
-        calcularValorFinal();
-
-        const botaoCompra = document.getElementById('comprar');
-        botaoCompra.addEventListener('click', function() {
-          window.location.href = '/HomePage/Comprar';1
-        });
-    });
-
-    const botoesRemover = document.querySelectorAll('.remove-button');
-    botoesRemover.forEach(botao => {
-        botao.addEventListener('click', function(event) {
-            event.preventDefault(); // Evita que o formulário seja submetido normalmente
-            const form = this.closest('form');
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Recarrega a página após a remoção do produto
-                } else {
-                    console.error('Erro ao remover produto:', response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao remover produto:', error);
-            });
-        });
-    });
-  </script>
 </html>
